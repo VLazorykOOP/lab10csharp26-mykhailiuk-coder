@@ -12,7 +12,7 @@ namespace Lab9_10CharpT
     {
         public double NewPrice { get; }
         public string Trend { get; }
-        public int Priority { get; } // Додано пріоритет (1 - найвищий)
+        public int Priority { get; } 
 
         public PriceEventArgs(double price, string trend, int priority = 2)
         {
@@ -28,7 +28,6 @@ namespace Lab9_10CharpT
         private Random rnd = new Random();
         private double currentPrice = 100.0;
 
-        // Статистика
         public int TotalEvents { get; private set; }
         public int BullActions { get; set; }
         public int BearActions { get; set; }
@@ -40,15 +39,14 @@ namespace Lab9_10CharpT
                 double change = (rnd.NextDouble() * 10) - 5;
                 currentPrice += change;
                 string trend = change > 0 ? "up" : "down";
-                int priority = rnd.Next(1, 3); // Випадковий пріоритет події
+                int priority = rnd.Next(1, 3); 
 
                 TotalEvents++;
                 Console.WriteLine($"\n[Подія {i}] Ціна: {currentPrice:F2} (Пріоритет: {priority})");
 
-                // Виклик події
                 OnPriceChanged(new PriceEventArgs(currentPrice, trend, priority));
 
-                await Task.Delay(800); // Імітація часу між торгами
+                await Task.Delay(800); 
             }
         }
 
@@ -79,7 +77,6 @@ namespace Lab9_10CharpT
 
         public virtual void React(object sender, PriceEventArgs e)
         {
-            // Логіка пріоритету: події з пріоритетом 1 обробляються з позначкою "VIP"
             string prefix = e.Priority == 1 ? "[VIP Опрацювання]" : "[Стандарт]";
 
             if (e.Trend == "up" && this is Bull)
@@ -108,7 +105,6 @@ namespace Lab9_10CharpT
             Bull bull = new Bull("Олександр", exchange);
             Bear bear = new Bear("Ігор", exchange);
 
-            // Підписка на подію
             exchange.PriceChanged += bull.React;
             exchange.PriceChanged += bear.React;
 
