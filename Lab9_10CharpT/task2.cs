@@ -99,6 +99,7 @@ namespace Lab9_10CharpT
     {
         static async Task Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.UTF8;
             Console.WriteLine("Запуск асинхронної біржі...");
             StockExchange exchange = new StockExchange();
 
